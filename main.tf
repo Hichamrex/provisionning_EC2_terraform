@@ -2,11 +2,8 @@ provider "aws" {
   region = "eu-west-3"
 }
 
-variable vpc_cidr_block {}
-variable subnet_cidr_bock {}
-variable avail_zone {}
-variable env_prefix {}
 
+#create resources vpc
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc_cdr_block
   tags = {
@@ -14,38 +11,28 @@ resource "aws_vpc" "myapp-vpc" {
   }
 }
 
-resource "aws_subnet" "myapp-subnet-1" {
+#creating the subnet
+module "my-subnet" {
+  source = "./modules/subnet" 
+  subnet_cidr_bock = var.subnet_cidr_bock
+  avail_zone = var.avail_zone
+  env_prefix = var.env_prefix
+  vpc_id = aws_vpc.myapp-vpc 
+}
+
+module "server" {
+  source = "./modules/webserver"
   vpc_id = aws_vpc.myapp-vpc.id
-  cidr_block = var.subnet_cidr_bock
-  availability_zone = var.avail_zone
-  tags = {
-    Name: "${vars.env-prefix}-subnet-1"
-  }
+  my_ip = var.my_ip
+  image_name = var.image_name
+  public_key_location = var.public_key_location
+  instance_type = var.instance_type
+  subnet_id = module.my-subnet.subnet.id
+  avail_zone = var.avail_zone
+  env_prefix = var.env_prefix
 }
+ 
 
-
-resource "aws_route_table" "myapp-rtb" {
-  vpc_id = aws_vpc.myapp-vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.myapp-igw.id
-  }
-  tags = {
-    Name: "${var.env_prefix}-rtb"
-  }
-}
-
-resource "aws_internet_gateway" "myapp-igw" {
-  vpc_id = aws_vpc.myapp-vpc.id
-  tags = {
-    Name: "${var.env_prefix}-igw"
-  }
-}
-
-resource "aws_route_table_association" "a-rtb-subnet" {
-  subnet_id = aws_subnet.myapp-subnet-1.id
-  route_table_id = aws_route_table.myapp-rtb.id
-}
 
 #####################################################
 # variable "subnet_cidr_block" {
