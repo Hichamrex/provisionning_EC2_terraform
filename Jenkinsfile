@@ -9,6 +9,7 @@ pipeline {
             steps {
                 sleep 100
                 echo 'Hello World'
+                error 'Intentional failure'
             }
         }
     }
