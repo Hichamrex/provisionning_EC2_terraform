@@ -12,6 +12,7 @@ pipeline {
                 error 'Intentional failure'
                 // echo "salam hhhh"
                 // echo "Adding some vpc Infra"
+                // cho "hhhhhhhhhhhhhhhhhh"
             }
         }
     }
