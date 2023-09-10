@@ -7,8 +7,8 @@ pipeline {
     stages {
         stage('Infrastructure') {
             steps {
-                sleep 60
-                echo 'Hello World'
+                sleep 100
+                echo 'Hello World
             }
         }
     }
