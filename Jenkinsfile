@@ -11,6 +11,7 @@ pipeline {
                 echo 'Hello World'
                 error 'Intentional failure'
                 // echo "salam hhhh"
+                // echo "Adding some vpc Infra"
             }
         }
     }
