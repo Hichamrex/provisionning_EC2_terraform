@@ -10,6 +10,7 @@ pipeline {
                 sleep 100
                 echo 'Hello World'
                 error 'Intentional failure'
+                // echo "salam hhhh"
             }
         }
     }
