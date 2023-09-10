@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Infrastructure') {
             steps {
-                sleep 412
+                sleep 788
                 echo 'Hello World'
                 error 'Intentional failure'
                 // echo "salam hhhh"
