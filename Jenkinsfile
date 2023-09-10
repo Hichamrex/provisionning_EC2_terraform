@@ -7,9 +7,9 @@ pipeline {
     stages {
         stage('Infrastructure') {
             steps {
-                sleep 788
+                sleep 795
                 echo 'Hello World'
-                error 'Intentional failure'
+                // error 'Intentional failure'
                 // echo "salam hhhh"
                 // echo "Adding some vpc Infra"
                 // cho "hhhhhhhhhhhhhhhhhh"
